@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+#builds python container based on alpine image with static IP address and enables access on port 8000 to container port 8000
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    container_name: webapp-task5
+    networks:
+      static-network:
+        ipv4_address: 172.19.0.2
+
+#creates redis container based on alpine image with static IP address
+  redis:
+    image: "redis:alpine"
+    container_name: redis-task5
+    networks:
+      static-network:
+        ipv4_address: 172.19.0.3
+
+#creates custom /24 bit subnet
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
