@@ -1,17 +1,5 @@
 version: "3.9"
 services:
-#builds python container based on alpine image with static IP address and enables access on port 8000 to container port 8000
-  web:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/code
-    container_name: webapp-task5
-    networks:
-      static-network:
-        ipv4_address: 172.19.0.2
-
 #creates redis container based on alpine image with static IP address
   redis:
     image: "redis:alpine"
@@ -20,9 +8,30 @@ services:
       static-network:
         ipv4_address: 172.19.0.3
 
+#builds python container based on alpine image with static IP address and enables access on port 8000 to container port 8000
+  web:
+    build: ./web
+    container_name: webapp-task5.1
+#    ports:
+#      - "8000:8000"
+    networks:
+      static-network:
+        ipv4_address: 172.19.0.2
+
+#creates HAProxy container based on alpine image
+  haproxy:
+    build: ./haproxy
+    ports:
+      - "80:80"
+    container_name: haproxy-task5.1
+    networks:
+      static-network:
+        ipv4_address: 172.19.0.100
+
 #creates custom /24 bit subnet
 networks:
   static-network:
     ipam:
       config:
         - subnet: 172.19.0.0/24
+
