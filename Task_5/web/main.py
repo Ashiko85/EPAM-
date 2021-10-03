@@ -10,7 +10,7 @@ from datetime import datetime
 # Create and initialize connection to Redis
 app = Flask(__name__)
 redis = redis.Redis(host=os.environ.get('REDIS_HOST'),
-                    password=None,
+                    password=os.environ.get('REDIS_PASS'),
                     port=os.environ.get('REDIS_PORT'),
                     db=0)
 

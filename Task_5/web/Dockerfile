@@ -1,12 +1,13 @@
-# syntax=docker/dockerfile:1
 FROM python:3.7-alpine
 
 #setting docker workdir
 WORKDIR /code
 
 #setting required environment variables
-ENV REDIS_HOST="172.19.0.3"
+#ENV REDIS_HOST="172.19.0.3"
+ENV REDIS_HOST="redis-task5"
 ENV REDIS_PORT="6379"
+ENV REDIS_PASS="password135"
 
 #install additional OS packages
 #RUN apk add --no-cache gcc musl-dev linux-headers
@@ -16,7 +17,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 #exposing port
-EXPOSE 8000
+#EXPOSE 8000
 
 #copy our file tree into the docker image WORKDIR
 COPY . .
